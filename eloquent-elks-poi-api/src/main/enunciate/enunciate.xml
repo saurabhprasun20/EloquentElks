@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<enunciate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:noNamespaceSchemaLocation="http://enunciate.webcohesion.com/schemas/enunciate-2.13.0.xsd"
+           version="0.0.1">
+    <title>
+        EloquentElks Point of Interest (POI) API
+    </title>
+    <description>
+        <![CDATA[
+        <p>The Point of Interest API is responsible for providing a POIs matching specific criteria to the frontend.</p>
+        <p><i>How does it work?</i></p>
+        <p>The POI API connects to the POI MongoDB instance, which holds the POI data. The API itself allows to filter Points of Interest by type, which is something the POI Density API makes use of. Also, the API provides distance calculation to landmarks as well as finding PoIs inside a radius of 500 meters around a point. By default, the docker container exposes the application on HTTP port 1337.</p>
+          ]]>
+    </description>
+    <application root="/"/>
+    <modules>
+        <jackson/>
+        <spring-web datatype-detection="aggressive"/>
+    </modules>
+</enunciate>

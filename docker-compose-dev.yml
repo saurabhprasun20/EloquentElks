@@ -1,0 +1,131 @@
+version: '3.8'
+services:
+    mongodb_airbnb:
+        image: mongo
+        volumes:
+            - ./eloquent-elks-airbnb-db/mongodb/database:/data/db
+        ports:
+            - 27017:27017
+        restart: unless-stopped
+        
+    dbseed_airbnb:
+        build:
+            context: ./eloquent-elks-airbnb-db/dbseed
+            dockerfile: Dockerfile
+        links:
+            - mongodb_airbnb
+        depends_on:
+            - mongodb_airbnb
+
+    airbnb_api:
+        build:
+            context: eloquent-elks-airbnb-api
+            dockerfile: Dockerfile
+        ports:
+            - 1340:8080
+        links:
+            - mongodb_airbnb
+        environment:
+           - SPRING_DATA_MONGODB_HOST=mongodb_airbnb
+           - SPRING_DATA_MONGODB_PORT=27017
+           - SPRING_DATA_MONGODB_DATABASE=eloquent-elks
+           - JVM_OPTS=-Xmx1g -Xms1g -XX:MaxPermSize=1024m
+        hostname: airbnb-api
+    
+    mongodb_poi:
+        build:
+            context: ./eloquent-elks-poi-db/mongodb
+            dockerfile: Dockerfile
+        volumes:
+            - ./eloquent-elks-poi-db/mongodb/database:/data/db
+        ports:
+            - 27018:27017
+        restart: unless-stopped
+        hostname: mongodb_poi
+                
+    dbseed_poi:
+        build:
+            context: ./eloquent-elks-poi-db/dbseed
+            dockerfile: Dockerfile
+        links:
+            - mongodb_poi
+        depends_on:
+            - mongodb_poi
+            
+    poi-api:
+        build:
+            context: eloquent-elks-poi-api
+            dockerfile: Dockerfile
+        ports: 
+            - 1337:8080
+        depends_on:
+            - mongodb_poi
+        environment:
+           - SPRING_DATA_MONGODB_HOST=mongodb_poi
+           - SPRING_DATA_MONGODB_PORT=27017
+           - SPRING_DATA_MONGODB_DATABASE=eloquent-elks
+        hostname: poi-api
+        
+    recommender-api:
+        build:
+            context: eloquent-elks-recommender-api
+            dockerfile: Dockerfile
+        ports: 
+            - 1338:8080
+        environment:
+            - ELOQUENTELKS_POI_DENSITY_API_PROTOCOL=http
+            - ELOQUENTELKS_POI_DENSITY_API_HOST=poi-density-api
+            - ELOQUENTELKS_POI_DENSITY_API_PORT=3001
+        hostname: recommender-api
+        
+    poi-density-api:
+        build:
+            context: eloquent-elks-poi-density-api
+            dockerfile: Dockerfile
+        ports:
+            - 1339:3001
+        environment:
+            - LOG_LEVEL=debug
+            - ELOQUENTELKS_POI_API_PROTOCOL=http
+            - ELOQUENTELKS_POI_API_HOST=poi-api
+            - ELOQUENTELKS_POI_API_PORT=8080
+            - ELOQUENTELKS_POI_DENSITY_DB_HOST=mongodb_poi-density
+            - ELOQUENTELKS_POI_DENSITY_DB_PORT=27017
+        hostname: poi-density-api
+        
+    mongodb_poi-density:
+        image: mongo
+        volumes:
+            - ./eloquent-elks-poi-density-db/mongodb/database:/data/db
+        ports:
+            - 27019:27017
+        restart: unless-stopped
+        hostname: mongodb_poi-density
+        
+    dbseed_poi-density:
+        build:
+            context: ./eloquent-elks-poi-density-db/dbseed
+            dockerfile: Dockerfile
+        links:
+            - mongodb_poi-density
+        depends_on:
+            - mongodb_poi-density
+ 
+    frontend:
+        build:
+            context: eloquent-elks-frontend
+            dockerfile: Dockerfile
+        ports:
+            - 3000:80
+        environment:
+            - REACT_APP_ELOQUENTELKS_POI_API_PROTOCOL=http
+            - REACT_APP_ELOQUENTELKS_POI_API_HOST=localhost
+            - REACT_APP_ELOQUENTELKS_POI_API_PORT=1337
+            - REACT_APP_ELOQUENTELKS_AIRBNB_API_PROTOCOL=http
+            - REACT_APP_ELOQUENTELKS_AIRBNB_API_HOST=localhost
+            - REACT_APP_ELOQUENTELKS_AIRBNB_API_PORT=1340
+            - REACT_APP_ELOQUENTELKS_RECOMMENDER_API_PROTOCOL=http
+            - REACT_APP_ELOQUENTELKS_RECOMMENDER_API_HOST=localhost
+            - REACT_APP_ELOQUENTELKS_RECOMMENDER_API_PORT=1338
+        hostname: frontend
+

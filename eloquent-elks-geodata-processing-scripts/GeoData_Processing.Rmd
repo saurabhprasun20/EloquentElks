@@ -1,0 +1,65 @@
+---
+title: "preparepois"
+author: "16-709-446 Patrick Luchsinger"
+date: "4/26/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Libraries
+
+```{r}
+library(tidyverse)
+library(sf)
+```
+
+## Including Plots
+
+```{r pressure, echo=FALSE}
+amenities <- st_read("amenity.geojson")
+```
+
+```{r}
+amenity_types <- c("pub", "restaurant", "library", "fast_food", "plaza", "fountain", "studio", "bus_station", "parking_space", "bar", "cafe", "gallery", "boat_rental", "cinema", "theatre", "casino", "arts_centre", "marketplace", "ice_cream", "bicycle_rental", "car_rental", "events_venue", "nightclub", "food_court", "biergarten", "gambling", "yacht_club", "concert_hall", "grass", "music_venue", "karaoke_box", "Beauty", "bbq", "spa", "salon", "store", "fortune_teller", "clothing store", "art_centre", "cooking_school", "Statue", "bakery", "social_club")
+
+
+amenities_clean <- amenities %>% 
+  select(amenity, id, name) %>% 
+  filter(amenity %in% amenity_types) %>% 
+  mutate_if(is.character, str_replace_all, pattern = "pub", replacement = "bar") %>% 
+  mutate_if(is.character, str_replace_all, pattern = "bbq", replacement = "restaurant") %>%
+  mutate_if(is.character, str_replace_all, pattern = "casino", replacement = "gambling") %>% 
+  mutate_if(is.character, str_replace_all, pattern = "arts_centre", replacement = "art_centre") %>% 
+  mutate_if(is.character, str_replace_all, pattern = "food_court", replacement = "restaurant") %>% 
+  mutate_if(is.character, str_replace_all, pattern = "_", replacement = " ") %>% 
+  rename(tourism = amenity) %>% 
+  rename("@id" = "id")
+```
+
+
+Calculate centroids of polygon features such that we have only point-data.
+```{r}
+amenities_centroid_clean <- amenities_clean %>% 
+  st_transform("EPSG:32118") %>% 
+  st_centroid() %>% 
+  st_transform("EPSG:4326")
+```
+
+```{r}
+st_write(amenities_centroid_clean, "pois_processed.geojson")
+```
+
+Find out all the types
+```{r}
+factets <- amenities_centroid_clean %>% 
+  group_by(tourism) %>%
+  count() %>% 
+  ungroup()
+
+
+factets$tourism
+```
+

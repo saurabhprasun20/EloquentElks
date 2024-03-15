@@ -1,0 +1,39 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: eloquent-elks-poi-density-api
+  description: The poi-density-api is responsible for computing densities of a certain attraction type in a hex-grid. It connects to the poi-api, which returns pois per attraction type. By default, the docker container exposes the application on HTTP port 1339.
+basePath: /api/v1
+tags:
+  - name: Density
+    description: Calculates densities
+
+consumes:
+  - application/json
+produces:
+  - application/json
+
+
+paths:
+  /poiDensity:
+    get:
+      tags:
+        - Examples
+      description: Get density of attraction by type.
+      parameters:
+        - in: query
+          name: attractionType
+          type: string
+          required: true
+          description: String name of attraction type (e.g. restaurant) for which to get the density.
+      responses:
+        200:
+          description: Returns density of selected attraction type as a geojson (See specification at https://datatracker.ietf.org/doc/html/rfc7946).
+
+  /spec:
+    get:
+      tags:
+        - Specification
+      responses:
+        200:
+          description: Return the API specification

@@ -1,0 +1,1 @@
+mongoimport --host mongodb_poi-density --db eloquent-elks --collection featureCollection --type json --file /densities.json --jsonArray

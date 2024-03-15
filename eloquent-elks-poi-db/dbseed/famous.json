@@ -1,0 +1,200 @@
+[
+	{
+	  "type": "Feature",
+	  "properties": {
+		"@id": "node/5116597",
+		"alt_name": "Empire State Building",
+		"ele": "15",
+		"name": "Empire State Building",
+		"tourism": "famous"
+	  },
+	  "geometry": {
+		"type": "Point",
+		"coordinates": [
+		  -73.98597,
+		  40.74871
+		]
+	  },
+	  "id": "node/5116597"
+	},
+	{
+	  "type": "Feature",
+	  "properties": {
+		"@id": "node/5112085",
+		"alt_name": "Central Park",
+		"ele": "34",
+		"name": "Central Park",
+		"tourism": "famous"
+	  },
+	  "geometry": {
+		"type": "Point",
+		"coordinates": [
+		  -73.96542,
+		  40.78232
+		]
+	  },
+	  "id": "node/5112085"
+	},
+	{
+	  "type": "Feature",
+	  "properties": {
+		"@id": "node/6930378",
+		"alt_name": "Times Square",
+		"ele": "25",
+		"name": "Times Square",
+		"tourism": "famous"
+	  },
+	  "geometry": {
+		"type": "Point",
+		"coordinates": [
+		  -73.98644,
+		  40.75636
+		]
+	  },
+	  "id": "node/6930378"
+	},
+	{
+	  "type": "Feature",
+	  "properties": {
+		"@id": "node/5139572",
+		"alt_name": "Statue of Liberty",
+		"ele": "2",
+		"name": "Statue of Liberty",
+		"tourism": "famous"
+	  },
+	  "geometry": {
+		"type": "Point",
+		"coordinates": [
+		  -74.04455,
+		  40.68928
+		]
+	  },
+	  "id": "node/5139572"
+	},
+	{
+	  "type": "Feature",
+	  "properties": {
+		"@id": "node/5119016",
+		"alt_name": "Grand Central Terminal",
+		"ele": "18",
+		"name": "Grand Central Terminal",
+		"tourism": "famous"
+	  },
+	  "geometry": {
+		"type": "Point",
+		"coordinates": [
+		  -73.97723,
+		  40.75273
+		]
+	  },
+	  "id": "node/5119016"
+	},
+	{
+	  "type": "Feature",
+	  "properties": {
+		"@id": "node/5125640",
+		"alt_name": "Madison Square Garden",
+		"ele": "11",
+		"name": "Madison Square Garden",
+		"tourism": "famous"
+	  },
+	  "geometry": {
+		"type": "Point",
+		"coordinates": [
+		  -73.99347,
+		  40.75066
+		]
+	  },
+	  "id": "node/5125640"
+	},
+	{
+	  "type": "Feature",
+	  "properties": {
+		"@id": "node/11819881",
+		"alt_name": "Flatiron Building",
+		"ele": "12",
+		"name": "Flatiron Building",
+		"tourism": "famous"
+	  },
+	  "geometry": {
+		"type": "Point",
+		"coordinates": [
+		  -73.98965,
+		  40.74101
+		]
+	  },
+	  "id": "node/11819881"
+	},
+	{
+	  "type": "Feature",
+	  "properties": {
+		"@id": "node/8015456",
+		"alt_name": "9/11 Memorial",
+		"ele": "2",
+		"name": "9/11 Memorial",
+		"tourism": "famous"
+	  },
+	  "geometry": {
+		"type": "Point",
+		"coordinates": [
+		  -74.0132,
+		  40.71203
+		]
+	  },
+	  "id": "node/8015456"
+	},
+	{
+	  "type": "Feature",
+	  "properties": {
+		"@id": "node/5145179",
+		"alt_name": "Yankee Stadium",
+		"ele": "5",
+		"name": "Yankee Stadium",
+		"tourism": "famous"
+	  },
+	  "geometry": {
+		"type": "Point",
+		"coordinates": [
+		  -73.92617,
+		  40.82964
+		]
+	  },
+	  "id": "node/5145179"
+	},
+	{
+	  "type": "Feature",
+	  "properties": {
+		"@id": "node/5113375",
+		"alt_name": "Columbia University",
+		"ele": "39",
+		"name": "Columbia University",
+		"tourism": "famous"
+	  },
+	  "geometry": {
+		"type": "Point",
+		"coordinates": [
+		  -73.96125,
+		  40.80899
+		]
+	  },
+	  "id": "node/5113375"
+	},
+		{
+	  "type": "Feature",
+	  "properties": {
+		"@id": "node/5141947",
+		"alt_name": "United Nations Headquarters",
+		"ele": "12",
+		"name": "United Nations Headquarters",
+		"tourism": "famous"
+	  },
+	  "geometry": {
+		"type": "Point",
+		"coordinates": [
+		  -73.96792,
+		  40.74955
+		]
+	  },
+	  "id": "node/5141947"
+	}
+]

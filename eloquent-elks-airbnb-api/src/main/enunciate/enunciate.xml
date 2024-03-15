@@ -1,0 +1,21 @@
+<enunciate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:noNamespaceSchemaLocation="http://enunciate.webcohesion.com/schemas/enunciate-2.13.0.xsd"
+           version="0.0.1">
+    <title>
+        EloquentElks Airbnb API
+    </title>
+    <description>
+        <![CDATA[
+        <p>The Airbnb API is responsible to provide a list of properties within a price range and a area range as selected</p>
+        <p><i>How does it work?</i></p>
+        <p>The Airbnb API connects to the Airbnb MongoDB instance, which holds the Properties data and fetches the properties based on the area and the price filter. By default, the docker container exposes the application on HTTP port 1340.</p>
+          ]]>
+    </description>
+
+    <application root="/" />
+    <modules>
+        <jackson/>
+        <spring-web datatype-detection="aggressive"/>
+    </modules>
+
+</enunciate>

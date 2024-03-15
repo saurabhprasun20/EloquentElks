@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<enunciate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:noNamespaceSchemaLocation="http://enunciate.webcohesion.com/schemas/enunciate-2.13.0.xsd"
+version="0.0.1">
+    <title>
+        EloquentElks Recommender API
+    </title>
+    <description>
+        <![CDATA[
+        <p>The Recommender API is responsible for providing a variety of recommendations to the frontend. As of now, it is capable of recommending an area to look for accommodation when provided with a list of attraction types for POIs.</p>
+        <p><i>How does it work?</i></p>
+        <p>We decided to make area recommendations according to the following schema (also depicted below):</p>
+        <ol>
+            <li>The Frontend calls recommender API with HTTP Post containing the attraction types that the user is interested in</li>
+            <li>The Recommender requests the density calculation from the POI density calculation endpoint.</li>
+            <li>The POI density API looks in the database if a recommendation for these areas have already been made and returns them if available.</li>
+            <li>For all the attraction types that are not in the database, the POI density API requests the POI of the respective type from the POI API.</li>
+            <li>With the received POIs, the POI density service structures the data into a hexagonal grid and counts the number of POIs in each grid cell. It assigns an ID to each grid cell, so that the recommender can normalize and aggregate the different attraction type densities.</li>
+            <li>When the recommender receives the density calculation results, it normalizes them and stores them into the database.</li>
+            <li>After normalization, the data is combined in to one aggregate density grid containing all the attraction types.</li>
+            <li>The result is returned to the frontend, where the density is displayed on the map as circles with color-coded intensities.</li>
+        </ol>
+          ]]>
+    </description>
+    <application root="/"/>
+    <modules>
+        <jackson/>
+        <spring-web datatype-detection="aggressive"/>
+    </modules>
+</enunciate>

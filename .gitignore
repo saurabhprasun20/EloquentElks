@@ -1,0 +1,7 @@
+eloquent-elks-airbnb-db/mongodb/database
+eloquent-elks-poi-db/mongodb/database
+eloquent-elks-poi-density-db/mongodb/database
+eloquent-elks-poi-api/src/main/resources/static/docs
+eloquent-elks-recommender-api/src/main/resources/static/docs
+.DS_Store
+.Rproj.user

@@ -1,0 +1,81 @@
+plugins {
+	id 'org.springframework.boot' version '2.4.4'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'jacoco'
+	id 'java'
+	id 'com.webcohesion.enunciate' version '2.13.3'
+	id 'org.sonarqube' version '3.1.1'
+}
+
+
+group = 'eloquent-elks'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+
+repositories {
+	mavenCentral()
+	google()
+	maven {
+		url "https://plugins.gradle.org/m2/"
+	}
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.projectlombok:lombok:1.18.16'
+	implementation 'com.mapbox.mapboxsdk:mapbox-sdk-geojson:5.8.0'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.mockito:mockito-inline'
+	testImplementation 'org.mockito:mockito-junit-jupiter'
+	compileOnly 'org.projectlombok:lombok'
+	compileOnly 'javax.xml.ws:jaxws-api:2.3.1'
+	compileOnly 'javax.jws:javax.jws-api:1.1'
+	compileOnly 'javax.xml.bind:jaxb-api:2.3.1'
+	annotationProcessor 'org.projectlombok:lombok'
+}
+
+apply plugin: "com.webcohesion.enunciate"
+
+tasks.enunciate {
+	File enunciateDistDir = file("src/main/resources/static/docs")
+	doFirst {
+		enunciateDistDir.deleteDir()
+		enunciateDistDir.mkdirs()
+	}
+	export("docs", enunciateDistDir)
+}
+
+jacocoTestReport{
+	reports{
+		xml.enabled = true
+		html.enabled = true
+	}
+
+	afterEvaluate {
+		classDirectories.setFrom(files(classDirectories.files.collect{
+			fileTree(dir: it, exclude: '**/static/docs/**')
+		}))
+	}
+}
+
+test {
+	useJUnitPlatform()
+}
+
+apply plugin: 'java'
+
+sonarqube {
+	properties {
+		property 'sonar.projectKey', 'eloquent-elks_EloquentElks_POI_API'
+		property 'sonar.projectName', 'eloquent-elks-poi-api'
+		property 'sonar.language', 'java'
+		property 'sonar.sources', 'src/main'
+		property 'sonar.tests', 'src/test'
+		property 'sonar.junit.reportPaths', 'build/test-results/test'
+		property 'sonar.java.coveragePlugin', 'jacoco'
+		property 'sonar.coverage.jacoco.xmlReportPaths', '**/jacocoTestReport.xml'
+		property 'sonar.java.binaries', 'build/classes'
+	}
+}

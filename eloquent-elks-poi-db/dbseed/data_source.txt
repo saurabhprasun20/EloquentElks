@@ -1,0 +1,1 @@
+Data for famous POI from: https://www.geonames.org
